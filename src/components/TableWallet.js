@@ -1,7 +1,6 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
-import Button from './Button';
 import { deleteExpense } from '../actions/index';
 
 class TableWallet extends Component {
