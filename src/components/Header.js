@@ -18,10 +18,14 @@ class Header extends Component {
             {' Despesa Total: R$ '}
             <span data-testid="total-field">
               { expenses
-                .reduce((acc, expanse) => acc + parseFloat(expanse
-                  .exchangeRates
-                  .LTC
-                  .ask), 0.0) }
+                .reduce((acc, expanse) => {
+                  const { value, currency } = expanse;
+                  const total = value * parseFloat(expanse
+                    .exchangeRates[currency]
+                    .ask);
+
+                  return acc + total;
+                }, 0.0) }
             </span>
           </p>
           <p data-testid="header-currency-field">
