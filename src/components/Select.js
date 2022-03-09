@@ -18,7 +18,7 @@ class Select extends Component {
           {options.length > 0
             ? options.map((option) => (
               <option
-                key={ key }
+                key={ option }
                 data-testid={ option }
               >
                 { option }

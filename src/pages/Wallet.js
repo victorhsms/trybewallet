@@ -2,6 +2,7 @@ import React from 'react';
 import FormWallet from '../components/FormWallet';
 import getCurrencyApi from '../services/currencyAPI';
 import Header from '../components/Header';
+import TableWallet from '../components/TableWallet';
 
 class Wallet extends React.Component {
   constructor() {
@@ -31,6 +32,7 @@ class Wallet extends React.Component {
       <div>
         <Header />
         <FormWallet currencyList={ currencyList } />
+        <TableWallet />
       </div>
     );
   }
