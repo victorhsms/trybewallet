@@ -1,40 +1,39 @@
 import React from 'react';
-import { connect } from 'react-redux';
-import PropTypes from 'prop-types';
+import FormWallet from '../components/FormWallet';
+import getCurrencyApi from '../services/currencyAPI';
+import Header from '../components/Header';
 
 class Wallet extends React.Component {
+  constructor() {
+    super();
+
+    this.state = {
+      currencyList: [],
+    };
+  }
+
+  componentDidMount() {
+    this.addCurrencys();
+  }
+
+  addCurrencys = async () => {
+    const currencys = await getCurrencyApi();
+    const arrayCurrencys = Object.keys(currencys);
+    const filterCurrencys = arrayCurrencys.filter((currency) => currency !== 'USDT');
+    this.setState({
+      currencyList: filterCurrencys,
+    });
+  }
+
   render() {
-    const { email } = this.props;
+    const { currencyList } = this.state;
     return (
       <div>
-        <header>
-          <p>
-            Email logado:
-            <span data-testid="email-field">
-              { email }
-            </span>
-          </p>
-          <p>
-            {' Despesa Total: R$ '}
-            <span data-testid="total-field">
-              0
-            </span>
-          </p>
-          <p data-testid="header-currency-field">
-            BRL
-          </p>
-        </header>
+        <Header />
+        <FormWallet currencyList={ currencyList } />
       </div>
     );
   }
 }
 
-Wallet.propTypes = {
-  email: PropTypes.string.isRequired,
-};
-
-const mapStateToProps = (state) => ({
-  email: state.user.email,
-});
-
-export default connect(mapStateToProps)(Wallet);
+export default Wallet;

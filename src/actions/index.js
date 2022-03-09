@@ -1,12 +1,25 @@
 // Coloque aqui suas actions
+import getCurrencyApi from '../services/currencyAPI';
 
 export const EMAIL_USER = 'EMAIL_USER';
+export const EXPENSE_LIST = 'EXPENSE_LIST';
 
-const setEmail = (emailUser) => ({
+export const setEmail = (emailUser) => ({
   type: EMAIL_USER,
-  payload: {
-    email: emailUser,
-  },
+  email: emailUser,
 });
 
-export default setEmail;
+const setExpenses = (expense) => ({
+  type: EXPENSE_LIST,
+  expenses: expense,
+});
+
+export const fetchExpenses = (expenses) => (dispatch) => {
+  getCurrencyApi().then((response) => {
+    const finalExpanse = {
+      ...expenses,
+      exchangeRates: response,
+    };
+    dispatch(setExpenses(finalExpanse));
+  });
+};

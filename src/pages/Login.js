@@ -4,7 +4,7 @@ import { Redirect } from 'react-router-dom';
 import { connect } from 'react-redux';
 import Input from '../components/Input';
 import Button from '../components/Button';
-import setEmail from '../actions';
+import { setEmail } from '../actions';
 
 class Login extends React.Component {
   constructor() {
