@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import Button from './Button';
+import { deleteExpense } from '../actions/index';
 
 class TableWallet extends Component {
   getConvertedValue = (expense) => {
@@ -9,6 +10,15 @@ class TableWallet extends Component {
     const quotation = parseFloat(exchangeRates[currency].ask);
     const valueConverted = value * quotation;
     return valueConverted.toFixed(2);
+  }
+
+  delExpense = (selectExpense) => {
+    const { expenses, dispatch } = this.props;
+    const newExpense = expenses.filter((expense) => (
+      expense !== selectExpense
+    ));
+
+    dispatch(deleteExpense(newExpense));
   }
 
   render() {
@@ -42,20 +52,13 @@ class TableWallet extends Component {
               <td>{ this.getConvertedValue(expense)}</td>
               <td>Real</td>
               <td>
-                <Button
-                  name="edit"
-                  id="edit-btn"
-                  disabled={ false }
-                  message="Editar"
-                  onClick={ () => {} }
-                />
-                <Button
-                  name="delete"
-                  id="delete-btn"
-                  disabled={ false }
-                  message="Deletar"
-                  onClick={ () => {} }
-                />
+                <button
+                  type="button"
+                  data-testid="delete-btn"
+                  onClick={ () => this.delExpense(expense) }
+                >
+                  Excluir
+                </button>
               </td>
             </tr>
           ))}
@@ -67,6 +70,7 @@ class TableWallet extends Component {
 
 TableWallet.propTypes = {
   expenses: PropTypes.arrayOf(PropTypes.string).isRequired,
+  dispatch: PropTypes.func.isRequired,
 };
 
 const mapStateToProps = (state) => ({
